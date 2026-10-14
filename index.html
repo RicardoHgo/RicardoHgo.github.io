@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TITAN IPS | Global Tech & Architecture Control</title>
+    <meta name="description" content="TITAN IPS - Soluciones integrales en Ciberseguridad, Redes IT/OT, Cumplimiento GRC, Ingeniería de Software y Cableado Estructurado.">
+    <meta property="og:title" content="TITAN IPS | Global Tech & Architecture Control">
+    <meta property="og:description" content="Tus retos, nuestras soluciones. Llevamos tu operación al siguiente nivel optimizando costos y blindando tu infraestructura.">
+    <meta property="og:image" content="logo tips2_3.png">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #00235a; 
+            --dark-grey: #363636;    
+            --white: #ffffff;
+            --accent-blue: #00a8e8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        html {
+            background-color: var(--white);
+        }
+
+        body {
+            background-color: transparent;
+            color: var(--dark-grey);
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        body.no-scroll {
+            overflow: hidden;
+        }
+
+        /* --- CANVAS PARA EL FONDO 3D INTERACTIVO --- */
+        #network-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            background-color: var(--white);
+        }
+
+        /* Barra de Encabezado Fija */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 5%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            z-index: 1000;
+            transition: padding 0.3s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            z-index: 1002;
+        }
+
+        .logo-img {
+            height: 80px; 
+            width: auto;
+            object-fit: contain;
+            transition: height 0.3s ease;
+        }
+
+        /* Botón de Menú Móvil (Hamburguesa) */
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1002;
+            flex-direction: column;
+            gap: 6px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 26px;
+            height: 3px;
+            background-color: var(--primary-blue);
+            border-radius: 3px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-toggle.is-active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .menu-toggle.is-active span:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .menu-toggle.is-active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* Fondo Oscuro / Overlay para Menú Móvil */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 35, 90, 0.35);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.is-visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--primary-blue); 
+            font-weight: 800;
+            font-size: 16px; 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease, transform 0.3s ease;
+            text-shadow: 0 0 10px rgba(255,255,255,0.9);
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Estructura de Secciones */
+        section {
+            padding: 100px 5% 60px 5%; 
+            min-height: 85vh; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 1; 
+        }
+
+        .text-glow {
+            text-shadow: 0px 0px 10px rgba(255, 255, 255, 1), 0px 0px 20px rgba(255, 255, 255, 0.9);
+            transition: text-shadow 0.3s ease;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            color: var(--primary-blue);
+            margin-bottom: 15px; 
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px auto; 
+            font-size: 1.2rem;
+            color: var(--dark-grey);
+            font-weight: 600;
+        }
+
+        /* SECCIÓN 1: Nosotros / Hero */
+        #nosotros {
+            text-align: center;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            color: var(--dark-grey);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 25px; 
+            max-width: 900px;
+        }
+
+        .hero-title span {
+            color: var(--primary-blue);
+        }
+
+        /* --- BOTONES CON EFECTO AZUL METÁLICO --- */
+        .btn-metallic {
+            background: linear-gradient(145deg, #0055cc 0%, #00235a 100%);
+            color: var(--white);
+            padding: 18px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 18px;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 25px rgba(0, 35, 90, 0.4), inset 0px 2px 5px rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.15);
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 15px;
+        }
+
+        .btn-metallic:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(0, 35, 90, 0.6), inset 0px 2px 5px rgba(255,255,255,0.6);
+            background: linear-gradient(145deg, #0066ff 0%, #003380 100%);
+            color: var(--white);
+        }
+
+        /* Botón Flotante (Sigue el despliegue) */
+        .floating-btn {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: linear-gradient(145deg, #0055cc 0%, #00235a 100%);
+            color: var(--white);
+            padding: 16px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 16px;
+            box-shadow: 0 10px 25px rgba(0, 35, 90, 0.4), inset 0px 2px 5px rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.15);
+            z-index: 9999;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .floating-btn:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 35, 90, 0.6), inset 0px 2px 5px rgba(255,255,255,0.6);
+            background: linear-gradient(145deg, #0066ff 0%, #003380 100%);
+        }
+
+        /* SECCIÓN 2: Soluciones */
+        .grid-soluciones {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px; 
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .solucion-wrapper {
+            position: relative;
+            z-index: 1;
+            animation: floatAnim 6s ease-in-out infinite;
+        }
+
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .solucion-wrapper:hover {
+            z-index: 50;
+            animation-play-state: paused;
+        }
+
+        .solucion-card {
+            padding: 26px 22px; 
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.45); 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            height: 100%;
+            border: 1px solid rgba(0, 35, 90, 0.08);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            outline: none;
+        }
+
+        .solucion-card:focus-visible {
+            box-shadow: 0 0 0 3px var(--accent-blue);
+        }
+
+        .solucion-card.auto-pulse {
+            transform: scale(1.04); 
+            background: rgba(255, 255, 255, 0.65); 
+            box-shadow: 0 10px 30px rgba(0, 35, 90, 0.08);
+            border: 1px solid rgba(0, 35, 90, 0.1);
+        }
+
+        .solucion-wrapper:hover .solucion-card {
+            transform: scale(1.15); 
+            background: rgba(255, 255, 255, 0.98); 
+            box-shadow: 0 25px 60px rgba(0, 35, 90, 0.22);
+            border: 1px solid rgba(0, 168, 232, 0.3);
+        }
+
+        .solucion-wrapper:hover .text-glow {
+            text-shadow: none; 
+        }
+
+        .card-badge {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #0077b6;
+            background: rgba(0, 168, 232, 0.12);
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .solucion-card h3 {
+            font-size: 1.45rem;
+            color: var(--primary-blue);
+            margin-bottom: 10px; 
+            font-weight: 800;
+        }
+
+        .solucion-card p {
+            font-size: 1.02rem;
+            color: var(--dark-grey);
+            margin-bottom: 10px; 
+            font-weight: 600;
+        }
+
+        .solucion-card ul {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .solucion-card ul li {
+            font-size: 0.92rem;
+            color: #444;
+            padding-left: 18px;
+            position: relative;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .solucion-card ul li::before {
+            content: '•';
+            color: var(--accent-blue);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .solucion-card-action {
+            margin-top: 18px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(0, 35, 90, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #0077b6;
+            font-weight: 800;
+            font-size: 0.92rem;
+            letter-spacing: 0.3px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .solucion-card:hover .solucion-card-action {
+            color: var(--primary-blue);
+            transform: translateX(4px);
+        }
+
+        /* --- ESTILOS DESTACADOS PARA IA INNOVATION --- */
+        .solucion-card.card-featured-ia {
+            background: linear-gradient(150deg, rgba(255, 255, 255, 0.96) 0%, rgba(235, 247, 255, 0.9) 100%);
+            border: 2px solid rgba(0, 168, 232, 0.55);
+            box-shadow: 0 12px 35px rgba(0, 168, 232, 0.2), 0 0 25px rgba(0, 168, 232, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solucion-card.card-featured-ia::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00d4ff, #00235a, transparent);
+            animation: iaShimmer 4s linear infinite;
+        }
+
+        @keyframes iaShimmer {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(100%); }
+        }
+
+        .solucion-wrapper:hover .solucion-card.card-featured-ia {
+            transform: scale(1.18);
+            border-color: #00d4ff;
+            box-shadow: 0 28px 75px rgba(0, 168, 232, 0.4), 0 0 35px rgba(0, 212, 255, 0.3);
+            background: #ffffff;
+        }
+
+        .card-badge.badge-ia {
+            background: linear-gradient(135deg, #00235a 0%, #0077b6 50%, #00a8e8 100%);
+            color: #ffffff;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 168, 232, 0.35);
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #00ffcc;
+            box-shadow: 0 0 8px #00ffcc;
+            display: inline-block;
+            animation: iaPulseDot 1.5s ease-in-out infinite;
+        }
+
+        @keyframes iaPulseDot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.4); opacity: 0.6; }
+        }
+
+        .solucion-card.card-featured-ia h3 {
+            background: linear-gradient(135deg, #00235a 0%, #0055cc 60%, #00a8e8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.52rem;
+        }
+
+        .solucion-card.card-featured-ia .solucion-card-action {
+            color: #0077b6;
+            border-top: 1px solid rgba(0, 168, 232, 0.25);
+            font-weight: 900;
+        }
+
+        .solucion-card.card-featured-ia:hover .solucion-card-action {
+            color: var(--primary-blue);
+        }
+
+        /* --- ESTILOS DEL MODAL / BLOG CORPORATIVO --- */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 20, 50, 0.68);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+        }
+
+        .modal-backdrop.is-active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-dialog {
+            background: #ffffff;
+            width: 100%;
+            max-width: 860px;
+            max-height: 88vh;
+            border-radius: 20px;
+            box-shadow: 0 30px 80px rgba(0, 25, 70, 0.4);
+            border: 1px solid rgba(0, 35, 90, 0.12);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: translateY(30px) scale(0.97);
+            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+        }
+
+        .modal-backdrop.is-active .modal-dialog {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 18px;
+            right: 20px;
+            background: rgba(0, 35, 90, 0.06);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--dark-grey);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .modal-close-btn:hover {
+            background: var(--primary-blue);
+            color: #ffffff;
+            transform: rotate(90deg);
+        }
+
+        .modal-scrollable {
+            overflow-y: auto;
+            padding: 40px 45px;
+            color: var(--dark-grey);
+        }
+
+        .modal-scrollable::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-scrollable::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .modal-scrollable::-webkit-scrollbar-thumb {
+            background: rgba(0, 35, 90, 0.2);
+            border-radius: 4px;
+        }
+
+        .modal-scrollable::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-blue);
+        }
+
+        .blog-header {
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            padding-bottom: 20px;
+        }
+
+        .blog-badge {
+            display: inline-block;
+            background: rgba(0, 168, 232, 0.12);
+            color: #0077b6;
+            font-weight: 800;
+            font-size: 13px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 12px;
+        }
+
+        .blog-title {
+            font-size: 1.95rem;
+            color: var(--primary-blue);
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 12px;
+        }
+
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
+            font-size: 13px;
+            color: #777;
+            font-weight: 600;
+        }
+
+        .blog-intro-card {
+            background: rgba(0, 35, 90, 0.03);
+            border-left: 4px solid var(--accent-blue);
+            padding: 18px 22px;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 30px;
+            font-size: 1.08rem;
+            line-height: 1.65;
+            font-weight: 600;
+            color: #222;
+        }
+
+        .blog-section {
+            margin-bottom: 28px;
+        }
+
+        .blog-section h4 {
+            font-size: 1.3rem;
+            color: var(--primary-blue);
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .blog-section p {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        .blog-highlight-box {
+            background: linear-gradient(135deg, rgba(0, 35, 90, 0.04) 0%, rgba(0, 168, 232, 0.08) 100%);
+            border: 1px solid rgba(0, 168, 232, 0.25);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 28px 0;
+        }
+
+        .blog-highlight-box h5 {
+            font-size: 1.15rem;
+            color: var(--primary-blue);
+            font-weight: 800;
+            margin-bottom: 14px;
+        }
+
+        .blog-benefits-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .blog-benefits-list li {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 10px;
+            font-size: 0.98rem;
+            line-height: 1.55;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .blog-benefits-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #00a8e8;
+            font-weight: 900;
+            font-size: 1.1rem;
+        }
+
+        .blog-cta-footer {
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .blog-cta-info {
+            max-width: 460px;
+        }
+
+        .blog-cta-info strong {
+            display: block;
+            color: var(--primary-blue);
+            font-size: 1.15rem;
+            margin-bottom: 4px;
+        }
+
+        .blog-cta-info p {
+            font-size: 0.92rem;
+            color: #666;
+            margin: 0;
+        }
+
+        /* SECCIÓN 3: Alianzas */
+        .alianzas-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px; 
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px; 
+        }
+
+        /* Logos en su estado y color natural, ajustados para verse completos */
+        .alianza-logo {
+            height: 45px;
+            max-width: 180px;
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .alianza-logo:hover {
+            transform: scale(1.08);
+        }
+
+        /* SECCIÓN 4: Contacto y Redes Sociales */
+        .contacto-box {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px; 
+        }
+
+        .contacto-box h3 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: var(--primary-blue);
+            font-weight: 800;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 35px;
+        }
+
+        .social-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--white);
+            color: var(--primary-blue);
+            box-shadow: 0 5px 15px rgba(0, 35, 90, 0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-icon svg {
+            width: 26px;
+            height: 26px;
+            fill: currentColor;
+        }
+
+        .social-icon:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 35, 90, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--dark-grey);
+            color: var(--white);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Ajustes Responsive y Dispositivos Móviles */
+        @media (max-width: 768px) {
+            header {
+                padding: 10px 18px;
+            }
+
+            .logo-img {
+                height: 50px; 
+            }
+
+            /* Mostrar botón hamburguesa */
+            .menu-toggle {
+                display: flex;
+            }
+
+            /* Overlay oscuro para fondo */
+            .nav-overlay {
+                display: block;
+            }
+
+            /* Menú desplegable lateral */
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 290px;
+                max-width: 82vw;
+                height: 100vh;
+                height: 100dvh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                box-shadow: -8px 0 30px rgba(0, 35, 90, 0.18);
+                z-index: 1001;
+                transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                display: flex;
+                flex-direction: column;
+                padding: 85px 24px 30px;
+            }
+
+            nav.is-open {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 8px;
+                width: 100%;
+            }
+
+            nav ul li {
+                width: 100%;
+            }
+
+            nav ul li a {
+                font-size: 15px;
+                padding: 12px 0;
+                display: block;
+                border-bottom: 1px solid rgba(0, 35, 90, 0.07);
+                text-shadow: none;
+            }
+
+            /* Secciones y espaciados */
+            section {
+                padding: 85px 18px 45px 18px;
+                min-height: auto;
+            }
+
+            #nosotros {
+                padding-top: 110px;
+                min-height: 80vh;
+            }
+
+            .hero-title {
+                font-size: 2.35rem;
+                margin-bottom: 18px;
+                line-height: 1.18;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 12px;
+            }
+
+            .section-subtitle {
+                font-size: 1.05rem;
+                margin-bottom: 28px;
+            }
+
+            .btn-metallic {
+                padding: 14px 28px;
+                font-size: 15px;
+            }
+
+            /* Grilla de soluciones en una columna fluida */
+            .grid-soluciones {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 0 5px;
+            }
+
+            .solucion-wrapper {
+                animation: none; /* Ahorro sustancial de batería y GPU */
+            }
+
+            .solucion-card {
+                padding: 22px 18px;
+                background: rgba(255, 255, 255, 0.7);
+                border: 1px solid rgba(0, 35, 90, 0.08);
+            }
+
+            .solucion-card.auto-pulse {
+                transform: scale(1.02);
+            }
+
+            .solucion-wrapper:hover .solucion-card {
+                transform: scale(1.02);
+            }
+
+            .solucion-card.card-featured-ia {
+                background: linear-gradient(150deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 248, 255, 0.95) 100%);
+                border: 2px solid rgba(0, 168, 232, 0.7);
+            }
+
+            .solucion-wrapper:hover .solucion-card.card-featured-ia {
+                transform: scale(1.02);
+            }
+
+            /* Alianzas */
+            .alianzas-container {
+                gap: 24px;
+                padding: 15px 5px;
+            }
+
+            .alianza-logo {
+                height: 38px;
+                max-width: 130px;
+            }
+
+            /* Contacto */
+            .contacto-box {
+                padding: 20px 8px;
+            }
+
+            .contacto-box h3 {
+                font-size: 1.7rem;
+            }
+
+            /* Botón flotante optimizado */
+            .floating-btn {
+                bottom: 16px;
+                right: 16px;
+                padding: 12px 18px;
+                font-size: 13px;
+                gap: 6px;
+                box-shadow: 0 6px 18px rgba(0, 35, 90, 0.35);
+            }
+        }
+
+        /* Pantallas ultra compactas (< 480px) */
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.95rem;
+            }
+
+            .section-title {
+                font-size: 1.65rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.95rem;
+            }
+
+            .solucion-card h3 {
+                font-size: 1.3rem;
+            }
+
+            .floating-btn {
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas para el fondo de desplazamiento 3D y Enrutamiento de Datos -->
+    <canvas id="network-canvas"></canvas>
+
+    <header>
+        <a href="#nosotros" class="logo" aria-label="TITAN IPS Inicio">
+            <img src="logo tips2_3.png" alt="TITAN IPS Logo" class="logo-img">
+        </a>
+
+        <!-- Botón Hamburguesa Móvil -->
+        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- Overlay de fondo para cerrar menú al pulsar fuera -->
+        <div class="nav-overlay" id="nav-overlay"></div>
+
+        <nav id="main-nav">
+            <ul>
+                <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
+                <li><a href="#soluciones" class="nav-link">Productos & Soluciones</a></li>
+                <li><a href="#alianzas" class="nav-link">Alianzas</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+    <section id="nosotros">
+        <h1 class="hero-title text-glow">Global Tech &<br><span>Architecture Control</span></h1>
+        <p class="section-subtitle text-glow">Tus retos, nuestras soluciones. Llevamos tu operación al siguiente nivel: optimizando costos y eliminando gastos innecesarios. Diseñamos la resiliencia exacta para garantizar una operación ininterrumpida.</p>
+        <a href="#soluciones" class="btn-metallic" style="padding: 15px 35px; font-size: 16px;">Explorar Soluciones</a>
+    </section>
+
+    <section id="soluciones">
+        <h2 class="section-title text-glow">Portafolio de Soluciones</h2>
+        <p class="section-subtitle text-glow">Capacidades técnicas y estratégicas diseñadas para proteger y potenciar el core de su organización.</p>
+        
+        <div class="grid-soluciones" id="contenedor-soluciones">
+            <!-- SERVICIO DESTACADO: IA INNOVATION & AGENTIC AI -->
+            <div class="solucion-wrapper" style="animation-delay: 0.0s;">
+                <div class="solucion-card card-featured-ia" data-solution="ia-innovation" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Abrir análisis de IA Innovation">
+                    <div class="text-glow">
+                        <span class="card-badge badge-ia"><span class="pulse-dot"></span> Core Estratégico | IA</span>
+                        <h3>IA Innovation & Agentic AI</h3>
+                        <p>Aceleramos el core empresarial con Inteligencia Artificial Generativa y Agentes Autónomos.</p>
+                        <ul>
+                            <li>Agentic AI: Orquestación de sistemas y agentes autónomos multi-tarea.</li>
+                            <li>Private GenAI & RAG: Modelos soberanos con blindaje Zero-Data-Leakage.</li>
+                            <li>Gobernanza & Guardrails: Auditoría ISO/IEC 42001 y mitigación de alucinaciones.</li>
+                        </ul>
+                    </div>
+                    <div class="solucion-card-action">
+                        <span>Explorar revolución de IA</span>
+                        <span aria-hidden="true">&rarr;</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="solucion-wrapper" style="animation-delay: 0.6s;">
+                <div class="solucion-card" data-solution="estrategica" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Abrir análisis de Consultoría Estratégica">
+                    <div class="text-glow">
+                        <span class="card-badge">Dirección TI & C-Level</span>
+                        <h3>Consultoría Estratégica</h3>
+                        <p>Orquestamos tu visión tecnológica con resiliencia de negocio.</p>
+                        <ul>
+                            <li>Virtual CISO & Virtual DPO: Liderazgo senior sin costo fijo.</li>
+                            <li>Continuidad de Negocio: BCP/DRP y simulación de crisis.</li>
+                        </ul>
+                    </div>
+                    <div class="solucion-card-action">
+                        <span>Ver análisis ejecutivo</span>
+                        <span aria-hidden="true">&rarr;</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="solucion-wrapper" style="animation-delay: 1.2s;">
+                <div class="solucion-card" data-solution="grc" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Abrir análisis de Cumplimiento GRC">
+                    <div class="text-glow">
+                        <span class="card-badge">Gobierno & Riesgo</span>
+                        <h3>Cumplimiento (GRC)</h3>
+                        <p>Rigor analítico con estándar nivel CISA y certeza jurídica.</p>
+                        <ul>
+                            <li>Auditoría y GAP Analysis previo a certificaciones.</li>
+                            <li>Implementación SGSI: ISO 27001:2022 y NIST CSF 2.0.</li>
+                        </ul>
+                    </div>
+                    <div class="solucion-card-action">
+                        <span>Ver análisis ejecutivo</span>
+                        <span aria-hidden="true">&rarr;</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="solucion-wrapper" style="animation-delay: 2.4s;">
+                <div class="solucion-card" data-solution="redes" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Abrir análisis de Consultoría Redes IT/OT">
+                    <div class="text-glow">
+                        <span class="card-badge">Conectividad Crítica</span>
+                        <h3>Consultoría Redes IT/OT</h3>
+                        <p>Infraestructuras de ultra alta disponibilidad y baja latencia.</p>
+                        <ul>
+                            <li>Paradigma Zero Trust (ZTNA): Microsegmentación L2-L7.</li>
+                            <li>Data Center, Campus y Convergencia Industrial IEC 62443.</li>
+                        </ul>
+                    </div>
+                    <div class="solucion-card-action">
+                        <span>Ver análisis ejecutivo</span>
+                        <span aria-hidden="true">&rarr;</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="solucion-wrapper" style="animation-delay: 0.8s;">
+                <div class="solucion-card" data-solution="ciberseguridad" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Abrir análisis de Ciberseguridad">
+                    <div class="text-glow">
+                        <span class="card-badge">Defensa Activa</span>
+                        <h3>Ciberseguridad</h3>
+                        <p>Protección proactiva del Core bajo inteligencia de amenazas.</p>
+                        <ul>
+                            <li>Pentesting y Red Teaming continuo: MITRE ATT&CK.</li>
+                            <li>Acompañamiento técnico hasta la remediación total.</li>
+                        </ul>
+                    </div>
+                    <div class="solucion-card-action">
+                        <span>Ver análisis ejecutivo</span>
+                        <span aria-hidden="true">&rarr;</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="solucion-wrapper" style="animation-delay: 2.0s;">
+                <div class="solucion-card" data-solution="software" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Abrir análisis de Ingeniería de Software">
+                    <div class="text-glow">
+                        <span class="card-badge">Software & DevSecOps</span>
+                        <h3>Ingeniería de Software</h3>
+                        <p>Desarrollo a la medida con seguridad código cero.</p>
+                        <ul>
+                            <li>Automatización Robótica (RPA) y ahorro de miles de horas.</li>
+                            <li>DevSecOps: Shift-Left y APIs seguras para IA empresarial.</li>
+                        </ul>
+                    </div>
+                    <div class="solucion-card-action">
+                        <span>Ver análisis ejecutivo</span>
+                        <span aria-hidden="true">&rarr;</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="solucion-wrapper" style="animation-delay: 3.2s;">
+                <div class="solucion-card" data-solution="cableado" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Abrir análisis de Cableado Estructurado">
+                    <div class="text-glow">
+                        <span class="card-badge">Capa Física & MPO</span>
+                        <h3>Cableado Estructurado</h3>
+                        <p>Ingeniería arquitectónica de Capa 1 para Centros de Datos.</p>
+                        <ul>
+                            <li>Troncales en Fibra Óptica (OM5/OS2) hasta 400 Gbps.</li>
+                            <li>Certificación Fluke Networks y RetroFit en caliente.</li>
+                        </ul>
+                    </div>
+                    <div class="solucion-card-action">
+                        <span>Ver análisis ejecutivo</span>
+                        <span aria-hidden="true">&rarr;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="alianzas">
+        <h2 class="section-title text-glow">Alianzas Tecnológicas</h2>
+        <p class="section-subtitle text-glow">Respaldados por los líderes globales de la industria para garantizar implementaciones de clase mundial.</p>
+        <div class="alianzas-container text-glow">
+            <a href="https://www.cisco.com" target="_blank" rel="noopener noreferrer">
+                <img src="Cisco.png" alt="Cisco" class="alianza-logo">
+            </a>
+            <a href="https://www.fortinet.com" target="_blank" rel="noopener noreferrer">
+                <img src="Fortinet.png" alt="Fortinet" class="alianza-logo">
+            </a>
+            <a href="https://www.ibm.com" target="_blank" rel="noopener noreferrer">
+                <img src="IBM.png" alt="IBM" class="alianza-logo">
+            </a>
+            <a href="https://www.trellix.com" target="_blank" rel="noopener noreferrer">
+                <img src="Trellix.png" alt="Trellix" class="alianza-logo">
+            </a>
+            <a href="https://www.h3c.com" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
+                <span class="alianza-logo" style="font-size: 2.2rem; font-weight: 800; display: flex; align-items: center; justify-content: center; color: #cc0000;">H3C</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- SECCIÓN CONTACTO ACTUALIZADA CON ICONOS -->
+    <section id="contacto">
+        <div class="contacto-box text-glow">
+            <h3>Eleva el estándar de tu infraestructura hoy.</h3>
+            <p style="font-size: 1.2rem; font-weight: 600; margin-bottom: 20px;">Estamos listos para blindar su operación. Seleccione el horario que mejor se adapte a su agenda.</p>
+            
+            <!-- Botón Central de Asesoría -->
+            <a href="https://calendar.app.google/ZH27bWmXKuaP2psF6" target="_blank" rel="noopener noreferrer" class="btn-metallic">
+                Agendar Asesoría
+            </a>
+
+            <!-- Íconos de Redes Sociales / Contacto Directo -->
+            <div class="social-links">
+                <a href="https://www.linkedin.com/company/titanips/" target="_blank" rel="noopener noreferrer" class="social-icon" title="LinkedIn TITAN IPS" aria-label="Perfil de LinkedIn de TITAN IPS">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+                <a href="https://wa.me/525623337990" target="_blank" rel="noopener noreferrer" class="social-icon" title="WhatsApp TITAN IPS" aria-label="Contacto por WhatsApp de TITAN IPS">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.031 0c-6.627 0-11.988 5.361-11.988 11.988 0 2.115.556 4.157 1.613 5.969l-1.656 6.043 6.183-1.621c1.761.967 3.75 1.478 5.848 1.478 6.627 0 11.988-5.361 11.988-11.988 0-6.627-5.361-11.988-11.988-11.988zm6.541 17.202c-.292.818-1.716 1.564-2.399 1.653-.611.08-1.396.173-4.524-1.123-3.754-1.554-6.177-5.405-6.363-5.653-.186-.248-1.52-2.023-1.52-3.864 0-1.842.96-2.754 1.298-3.109.338-.355.736-.444.981-.444.245 0 .49.006.703.016.223.01.523-.085.818.625.305.736 1.042 2.54 1.134 2.726.092.186.153.404.031.65-.123.245-.184.398-.368.613-.184.215-.386.467-.552.65-.184.198-.383.415-.164.792.219.377.973 1.608 2.086 2.601 1.433 1.282 2.628 1.677 3.013 1.863.385.186.613.153.843-.109.23-.261.996-1.165 1.261-1.564.264-.398.528-.33.882-.198.354.132 2.235 1.054 2.618 1.242.383.188.638.281.73.438.092.157.092.903-.2 1.721z"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <footer>
+        <p>TITAN IPS &copy; 2026. Global Tech & Architecture Control. | www.titanips.mx</p>
+    </footer>
+
+    <!-- BOTÓN FLOTANTE QUE SIGUE EL DESPLIGUE -->
+    <a href="https://calendar.app.google/ZH27bWmXKuaP2psF6" target="_blank" rel="noopener noreferrer" class="floating-btn" aria-label="Agendar Asesoría en Google Calendar">
+        <span aria-hidden="true">📅</span> Agendar Asesoría
+    </a>
+
+    <!-- MODAL POPUP PARA EL BLOG CORPORATIVO DE SOLUCIONES -->
+    <div id="solucion-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-blog-title">
+        <div class="modal-dialog">
+            <button class="modal-close-btn" id="modal-close-btn" aria-label="Cerrar modal">&times;</button>
+            <div class="modal-scrollable" id="modal-content-area">
+                <!-- Contenido generado dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE ANIMACIONES -->
+    <script>
+        // --- 0. CONTROL DE MENÚ MÓVIL ---
+        const menuToggle = document.getElementById('menu-toggle');
+        const mainNav = document.getElementById('main-nav');
+        const navOverlay = document.getElementById('nav-overlay');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function toggleMenu() {
+            const isOpen = mainNav.classList.toggle('is-open');
+            menuToggle.classList.toggle('is-active', isOpen);
+            navOverlay.classList.toggle('is-visible', isOpen);
+            document.body.classList.toggle('no-scroll', isOpen);
+            menuToggle.setAttribute('aria-expanded', isOpen);
+        }
+
+        function closeMenu() {
+            if (mainNav.classList.contains('is-open')) {
+                mainNav.classList.remove('is-open');
+                menuToggle.classList.remove('is-active');
+                navOverlay.classList.remove('is-visible');
+                document.body.classList.remove('no-scroll');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        if (menuToggle) menuToggle.addEventListener('click', toggleMenu);
+        if (navOverlay) navOverlay.addEventListener('click', closeMenu);
+        navLinks.forEach(link => link.addEventListener('click', closeMenu));
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMenu();
+        });
+
+        // --- 1. LÓGICA DE PULSO ALEATORIO CONTINUO PARA LOS SERVICIOS ---
+        const cards = document.querySelectorAll('.solucion-card');
+        const wrappers = document.querySelectorAll('.solucion-wrapper');
+        
+        function applyRandomPulse() {
+            cards.forEach(card => card.classList.remove('auto-pulse'));
+            const randomIndex = Math.floor(Math.random() * cards.length);
+            if (!wrappers[randomIndex].matches(':hover')) {
+                cards[randomIndex].classList.add('auto-pulse');
+            }
+        }
+        setInterval(applyRandomPulse, 2200);
+
+        // --- 1.1 DATASET Y CONTROLADOR DEL BLOG CORPORATIVO EN MODAL ---
+        const modalBackdrop = document.getElementById('solucion-modal');
+        const modalContentArea = document.getElementById('modal-content-area');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+
+        const articulosSoluciones = {
+            'ia-innovation': {
+                badge: 'Inteligencia Artificial Generativa & Agéntica',
+                readTime: '5 min de lectura',
+                date: 'Tendencia Global 2026',
+                title: 'IA Innovation: Generative AI, Agentes Autónomos y la Nueva Frontera de la Productividad Empresarial',
+                intro: 'La Inteligencia Artificial ha superado la etapa experimental de chatbots genéricos. Las corporaciones de vanguardia demandan sistemas agénticos autónomos y arquitecturas generativas privadas que tomen decisiones operativas de alto valor, respeten la confidencialidad de la información y generen un retorno de inversión auditable.',
+                sections: [
+                    {
+                        heading: '1. El Salto Paradigmático: De la IA Asistiva a la IA Agéntica (Agentic AI)',
+                        text: 'Mientras que la IA generativa tradicional requiere instrucciones continuas de un operador humano, los Agentes Autónomos (Agentic AI) reciben un objetivo de negocio de alto nivel, planifican de forma independiente los pasos a seguir, invocan herramientas y APIs corporativas, analizan sus propios resultados y corrigen desviaciones en tiempo real para completar la meta con mínima supervisión humana.'
+                    },
+                    {
+                        heading: '2. Tres Servicios de Alta Demanda Corporativa Implementados por TITAN IPS',
+                        text: 'Para dar respuesta a los requerimientos más críticos de directores de operaciones, finanzas y tecnología, estructuramos tres capacidades altamente demandadas por el mercado actual:'
+                    },
+                    {
+                        heading: '• Servicio 1: Enterprise Multi-Agent Workflows (Flujos Multi-Agente Autónomos)',
+                        text: 'Desplegamos enjambres de agentes especializados interconectados que colaboran entre sí. Desde agentes de conciliación contable y análisis de riesgo contractual, hasta agentes de operaciones TI (AIOps) que diagnostican incidentes y aplican remediaciones de red en segundos, transformando procesos de días en minutos.'
+                    },
+                    {
+                        heading: '• Servicio 2: Private Generative AI & RAG Soberano (Zero-Data-Leakage)',
+                        text: 'Conectamos modelos de lenguaje avanzados al conocimiento interno exclusivo de su corporativo mediante arquitecturas RAG (Retrieval-Augmented Generation) blindadas. Garantizamos soberanía total de datos: despliegue on-premise o en nube privada dedicada con control de acceso por roles (RBAC), asegurando que ningún secreto comercial ni dato regulado sea utilizado para entrenar modelos públicos externos.'
+                    },
+                    {
+                        heading: '• Servicio 3: Gobernanza de IA, Guardrails y Auditoría de Modelos (ISO/IEC 42001 & NIST AI RMF)',
+                        text: 'Establecemos barreras de contención (Guardrails) en tiempo real para evitar alucinaciones, respuestas no conformes y ataques adversarios como inyecciones de prompts (Prompt Injection) o jailbreaks. Auditamos sus sistemas bajo los estándares emergentes de gobernanza de IA (ISO/IEC 42001 y marco NIST AI RMF), dotando a su junta directiva de total certeza jurídica y ética.'
+                    },
+                    {
+                        heading: '3. El Diferencial TITAN IPS: IA Respaldada por Infraestructura y Ciberseguridad',
+                        text: 'La Inteligencia Artificial no vive en el vacío; requiere redes de ultra baja latencia, Capa 1 de alta densidad y microsegmentación Zero Trust para operar sin vulnerabilidades. TITAN IPS unifica la innovación en IA con la solidez de infraestructura que su corporación ya conoce, garantizando proyectos que pasan de prototipo a producción con 99.999% de disponibilidad.'
+                    }
+                ],
+                highlights: {
+                    title: 'Impacto Estratégico y Retorno de Inversión (ROI)',
+                    items: [
+                        'Reducción de hasta un 75% en los tiempos de ejecución de flujos operativos complejos mediante agentes autónomos.',
+                        'Soberanía absoluta de la propiedad intelectual y secretos de negocio (Cero fuga de datos corporativos).',
+                        'Mitigación proactiva de riesgos regulatorios y de sesgo conforme a estándares ISO/IEC 42001 y NIST.',
+                        'Retorno de inversión medible en menos de 90 días enfocado en optimización de costos y escalabilidad sin fricción.'
+                    ]
+                }
+            },
+            'estrategica': {
+                badge: 'Estrategia TI & Continuidad de Negocio',
+                readTime: '4 min de lectura',
+                date: 'Edición Corporativa 2026',
+                title: 'Orquestación Tecnológica BCP/DRP y Liderazgo vCISO: Blindaje Ejecutivo y Resiliencia Operativa',
+                intro: 'En el entorno empresarial moderno, una disrupción tecnológica no es un simple incidente técnico: representa pérdidas promedio de $100,000 USD por hora, contingencias regulatorias y desgaste irreversible en la reputación institucional ante inversionistas y clientes.',
+                sections: [
+                    {
+                        heading: '1. El Reto Empresarial: Brecha de Talento C-Level y Costos Fijos',
+                        text: 'Incorporar un CISO (Chief Information Security Officer) o DPO (Data Protection Officer) a tiempo completo conlleva costos anuales que superan los $180,000 USD, sumado a la escasez crítica de especialistas en el mercado global. Las corporaciones medianas y grandes requieren gobernanza de seguridad de primer nivel con agilidad, objetividad e interlocución directa ante el Consejo de Administración sin sobrecargar su nómina fija.'
+                    },
+                    {
+                        heading: '2. Modelo vCISO & vDPO de TITAN IPS: Liderazgo Estratégico Bajo Demanda',
+                        text: 'Proveemos dirección experta que alinea la ciberseguridad con las metas financieras y operativas de la compañía. Diseñamos el Plan Director de Seguridad de la Información, auditamos proveedores tecnológicos críticos, gestionamos comités de crisis y garantizamos cumplimiento legal continuo frente a normativas nacionales e internacionales.'
+                    },
+                    {
+                        heading: '3. Tendencias y Novedades 2026: BCP/DRP Hiper-Resiliente',
+                        text: 'Sustituimos los manuales estáticos por resiliencia activa. Desarrollamos simulaciones de crisis ejecutivas (Tabletop Exercises) basadas en vectores de extorsión de última generación y arquitecturas de recuperación ante desastres (DRP) multinube, reduciendo los tiempos de recuperación (RTO) y puntos de pérdida (RPO) a umbrales mínimos auditables.'
+                    }
+                ],
+                highlights: {
+                    title: 'Retorno de Inversión (ROI) y Beneficios Clave',
+                    items: [
+                        'Optimización de hasta un 65% en costos de dirección de seguridad frente al modelo tradicional.',
+                        'Continuidad operativa ininterrumpida con planes de contingencia validados empíricamente.',
+                        'Traducción de riesgos técnicos en lenguaje financiero para el Consejo de Administración.',
+                        'Acreditación de madurez en seguridad para licitaciones corporativas y contratos internacionales.'
+                    ]
+                }
+            },
+            'grc': {
+                badge: 'Gobierno, Riesgo & Cumplimiento Normativo',
+                readTime: '5 min de lectura',
+                date: 'Edición Corporativa 2026',
+                title: 'Rigor Analítico CISA y SGSI: Transformando el Cumplimiento Normativo en Blindaje Financiero',
+                intro: 'Las regulaciones ya no son listas de verificación pasivas. Representan el marco que define si una corporación puede operar con instituciones bancarias, cotizar en bolsa o concretar alianzas transfronterizas sin penalizaciones ni bloqueos contractuales.',
+                sections: [
+                    {
+                        heading: '1. La Presión Regulatoria: ISO 27001:2022 y NIST CSF 2.0',
+                        text: 'La adopción de ISO/IEC 27001:2022 y la actualización NIST CSF 2.0 (que integra la función nuclear de "Govern") exigen controles más estrictos sobre la nube y la cadena de suministro. Una no conformidad en una auditoría externa frena licitaciones y expone a la junta directiva a responsabilidades fiduciarias.'
+                    },
+                    {
+                        heading: '2. Auditorías y GAP Analysis con Rigor Nivel ISACA',
+                        text: 'Nuestras auditorías son conducidas por consultores certificados CISA y CRISC. Evaluamos con profundidad quirúrgica el estado de madurez de sus controles de seguridad, identificando brechas operativas antes de que sean detectadas por reguladores bancarios, auditores de clientes o aseguradoras de ciberriesgo.'
+                    },
+                    {
+                        heading: '3. Gestión Integral del Riesgo en Terceros (TPRM)',
+                        text: 'Más del 60% de los incidentes de fuga de información se originan en proveedores o contratistas. Implementamos marcos de evaluación y monitoreo de riesgos en la cadena de suministro tecnológica, garantizando que sus socios compartan su mismo estándar de exigencia.'
+                    }
+                ],
+                highlights: {
+                    title: 'Impacto Estratégico y Certeza Jurídica',
+                    items: [
+                        'Aceleración de hasta un 70% en el tiempo de preparación para certificaciones ISO 27001 y NIST.',
+                        'Mitigación comprobada de multas por normativas de protección de datos (GDPR, LPDP).',
+                        'Dictámenes técnicos formales para comités de auditoría interna y aseguradoras.',
+                        'Ventaja competitiva decisiva al demostrar solidez institucional ante clientes globales.'
+                    ]
+                }
+            },
+            'redes': {
+                badge: 'Conectividad Empresarial & Convergencia OT',
+                readTime: '4 min de lectura',
+                date: 'Edición Corporativa 2026',
+                title: 'Arquitectura de Redes IT/OT y Paradigma Zero Trust: Disponibilidad sin Brechas en Entornos Críticos',
+                intro: 'La convergencia entre las redes de negocio (IT) y las redes operativas de planta y control (OT) ha eliminado el perímetro seguro. Un paquete malicioso en la red administrativa puede detener la línea de manufactura o la distribución física.',
+                sections: [
+                    {
+                        heading: '1. Superando el Paradigma de Perímetro Tradicional (Zero Trust)',
+                        text: 'Las redes corporativas modernas ya no pueden confiar en ubicaciones físicas o VPNs convencionales. Bajo Zero Trust Network Access (ZTNA), cada conexión, usuario y dispositivo es autenticado, autorizado e inspeccionado de manera continua antes de conceder acceso a recursos segmentados.'
+                    },
+                    {
+                        heading: '2. Blindaje Industrial bajo Estándar ISA/IEC 62443',
+                        text: 'Diseñamos arquitecturas de segmentación y microsegmentación para sistemas SCADA, PLCs y sensores IoT en Capas 2 a 7, asegurando que las operaciones industriales sigan funcionando con latencia ultrabaja incluso bajo intentos de intrusión en la red corporativa.'
+                    },
+                    {
+                        heading: '3. Redes Campus y Data Centers de Misión Crítica',
+                        text: 'Implementamos soluciones SD-WAN, SD-Access y arquitecturas de núcleo redundante (activo-activo) con conmutación por error en milisegundos, integrando switches de ultra alto rendimiento y Wi-Fi 6E/7 para soportar alta densidad de dispositivos sin saturación.'
+                    }
+                ],
+                highlights: {
+                    title: 'Garantías Operativas y Rendimiento',
+                    items: [
+                        'Disponibilidad del 99.999% en infraestructura de conectividad de misión crítica.',
+                        'Aislamiento inmediato de incidentes sin impacto en los procesos productivos de planta.',
+                        'Visibilidad total del tráfico este-oeste y norte-sur con telemetría en tiempo real.',
+                        'Optimización de anchos de banda y reducción de costos en enlaces dedicados mediante SD-WAN.'
+                    ]
+                }
+            },
+            'ciberseguridad': {
+                badge: 'Defensa Activa & Inteligencia de Amenazas',
+                readTime: '4 min de lectura',
+                date: 'Edición Corporativa 2026',
+                title: 'Defensa Activa y Pentesting bajo MITRE ATT&CK: Protección Integral del Core Transaccional',
+                intro: 'Los ciberadversarios actuales utilizan técnicas de evasión avanzadas, robo de credenciales y explotación de cadenas de suministro. El 80% de las brechas ocurren en organizaciones que creían estar protegidas por antivirus convencionales.',
+                sections: [
+                    {
+                        heading: '1. De la Protección Reactiva a la Defensa Ofensiva Controlada',
+                        text: 'No basta con esperar a que salte una alerta. Realizamos ejercicios de Red Teaming y pruebas de penetración (Pentesting) basadas en el marco MITRE ATT&CK y NIST SP 800-115, simulando con precisión quirúrgica el comportamiento de atacantes avanzados persistentes (APTs).'
+                    },
+                    {
+                        heading: '2. Bastionado Integral (Hardening) y Gestión de Superficie de Ataque',
+                        text: 'Auditamos y cerramos las puertas de entrada en infraestructuras locales, contenedores Kubernetes y nubes públicas (AWS, Azure, GCP). Detectamos activos expuestos no inventariados (Shadow IT) y eliminamos configuraciones deficientes antes de que sean explotadas.'
+                    },
+                    {
+                        heading: '3. Acompañamiento en Remediación: Más que un Reporte, Soluciones Reales',
+                        text: 'A diferencia de consultorías tradicionales que solo entregan un documento de cientos de páginas con advertencias genéricas, el equipo de TITAN IPS trabaja mano a mano con sus ingenieros para aplicar las remediaciones técnicas, validar parches y asegurar el blindaje definitivo.'
+                    }
+                ],
+                highlights: {
+                    title: 'Blindaje Corporativo y Resiliencia Comprobada',
+                    items: [
+                        'Detección y neutralización de vectores de ataque críticos antes de que causen daños financieros.',
+                        'Protección garantizada del core bancario, propiedad intelectual y bases de datos transaccionales.',
+                        'Plan de respuesta a incidentes coordinado para restaurar la normalidad en tiempo récord.',
+                        'Certificación técnica formal de no-vulnerabilidad para comités de riesgos y clientes institucionales.'
+                    ]
+                }
+            },
+            'software': {
+                badge: 'Ingeniería de Software & DevSecOps',
+                readTime: '4 min de lectura',
+                date: 'Edición Corporativa 2026',
+                title: 'Desarrollo a la Medida, RPA y DevSecOps: Eficiencia Automatizada con Seguridad Código Cero',
+                intro: 'En la era de la transformación digital acelerada, la rapidez de despliegue no puede comprometer la integridad del negocio. Resolver una vulnerabilidad en producción cuesta hasta 30 veces más que eliminarla durante la fase de arquitectura.',
+                sections: [
+                    {
+                        heading: '1. Filosofía Shift-Left y Pipelines DevSecOps Automatizados',
+                        text: 'Integramos pruebas automáticas de seguridad de código estático (SAST), análisis dinámico (DAST) y escaneo de vulnerabilidades en dependencias de código abierto (SCA) directamente en los pipelines CI/CD de su equipo de ingeniería. Cada versión se entrega certificada sin frenar el ritmo de despliegue.'
+                    },
+                    {
+                        heading: '2. Automatización Robótica de Procesos (RPA) de Alto Impacto',
+                        text: 'Desarrollamos bots de software inteligentes que ejecutan tareas repetitivas en sistemas financieros, facturación, conciliaciones masivas y gestión logística. Eliminamos el error humano, aceleramos los ciclos operativos y liberamos a su talento humano para labores estratégicas de alto valor.'
+                    },
+                    {
+                        heading: '3. APIs Seguras y Preparadas para Ecosistemas de IA Empresarial',
+                        text: 'Construimos arquitecturas basadas en microservicios resilientes, protegiendo endpoints con autenticación robusta, limitación de tasa y cifrado de extremo a extremo, blindando las integraciones de modelos de lenguaje (LLM) contra inyecciones de prompts y fuga de secretos comerciales.'
+                    }
+                ],
+                highlights: {
+                    title: 'Resultados de Negocio y Escalabilidad',
+                    items: [
+                        'Ahorro de hasta miles de horas operativas al año mediante automatización RPA.',
+                        'Reducción drástica de incidentes de seguridad web y API (OWASP Top 10 y API Security Top 10).',
+                        'Arquitecturas de software nativas de la nube listas para alta concurrencia y tráfico masivo.',
+                        'Trazabilidad completa y auditoría de código conforme a estándares regulatorios.'
+                    ]
+                }
+            },
+            'cableado': {
+                badge: 'Infraestructura Física & Centros de Datos',
+                readTime: '4 min de lectura',
+                date: 'Edición Corporativa 2026',
+                title: 'Ingeniería Arquitectónica de Capa 1: El Fundamento Físico de la Disponibilidad Corporativa',
+                intro: 'Más del 50% de las fallas intermitentes, caídas inesperadas y problemas de latencia en centros de datos provienen de una Capa 1 deficiente. El cableado representa menos del 10% del presupuesto de infraestructura, pero posee una vida útil de más de 15 años.',
+                sections: [
+                    {
+                        heading: '1. Backbones de Fibra Óptica de Ultra Alta Densidad (Hasta 400G)',
+                        text: 'Diseñamos e instalamos troncales en fibra óptica monomodo (OS2) y multimodo (OM4/OM5) con sistemas de conectorización avanzada MPO/MTP, diseñados específicamente para satisfacer las demandas de ancho de banda y procesamiento intensivo de la próxima década.'
+                    },
+                    {
+                        heading: '2. Modernización RetroFit en Caliente sin Pérdida Operativa',
+                        text: 'Renovamos y organizamos racks, canalizaciones, bandejas y gabinetes en centros de datos corporativos que se encuentran en plena operación. Nuestro protocolo de migración planificada garantiza cero impacto en la continuidad de sus servicios durante el trabajo físico.'
+                    },
+                    {
+                        heading: '3. Certificación Fluke Networks y Memoria Técnica Integral',
+                        text: 'Cada nodo y enlace de fibra es certificado bajo estrictos estándares internacionales (TIA/EIA-568, ISO/IEC 11801, BICSI) con analizadores Fluke Networks (OTDR y canal permanente). Entregamos una memoria técnica digital detallada con planos, etiquetado normativo y garantía extendida.'
+                    }
+                ],
+                highlights: {
+                    title: 'Garantía y Longevidad para la Inversión',
+                    items: [
+                        'Eliminación total de cuellos de botella por atenuación, ruido electromagnético o mala conectorización.',
+                        'Orden y ventilación óptimos en Data Centers para reducir el consumo energético de climatización.',
+                        'Documentación formal y certificada válida para auditorías de seguros y cumplimiento de SLAs.',
+                        'Garantía de rendimiento de hasta 25 años en soluciones integrales certificadas.'
+                    ]
+                }
+            }
+        };
+
+        function openModal(solutionKey) {
+            const data = articulosSoluciones[solutionKey];
+            if (!data) return;
+
+            let sectionsHtml = '';
+            data.sections.forEach(sec => {
+                sectionsHtml += `
+                    <div class="blog-section">
+                        <h4>${sec.heading}</h4>
+                        <p>${sec.text}</p>
+                    </div>
+                `;
+            });
+
+            let highlightsHtml = '';
+            if (data.highlights) {
+                let bulletsHtml = '';
+                data.highlights.items.forEach(item => {
+                    bulletsHtml += `<li>${item}</li>`;
+                });
+                highlightsHtml = `
+                    <div class="blog-highlight-box">
+                        <h5>${data.highlights.title}</h5>
+                        <ul class="blog-benefits-list">
+                            ${bulletsHtml}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            modalContentArea.innerHTML = `
+                <div class="blog-header">
+                    <span class="blog-badge">${data.badge}</span>
+                    <h3 class="blog-title" id="modal-blog-title">${data.title}</h3>
+                    <div class="blog-meta">
+                        <span>⏱️ ${data.readTime}</span>
+                        <span>📅 ${data.date}</span>
+                        <span>🏢 TITAN IPS Advisory</span>
+                    </div>
+                </div>
+
+                <div class="blog-intro-card">
+                    ${data.intro}
+                </div>
+
+                ${sectionsHtml}
+
+                ${highlightsHtml}
+
+                <div class="blog-cta-footer">
+                    <div class="blog-cta-info">
+                        <strong>¿Listo para blindar esta área en su organización?</strong>
+                        <p>Nuestros consultores senior analizan su infraestructura actual y diseñan una propuesta a la medida de sus objetivos corporativos.</p>
+                    </div>
+                    <a href="https://calendar.app.google/ZH27bWmXKuaP2psF6" target="_blank" rel="noopener noreferrer" class="btn-metallic" style="padding: 14px 28px; font-size: 15px; margin: 0;">
+                        Agendar Asesoría Ejecutiva
+                    </a>
+                </div>
+            `;
+
+            modalBackdrop.classList.add('is-active');
+            modalBackdrop.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('no-scroll');
+            modalContentArea.scrollTop = 0;
+        }
+
+        function closeModal() {
+            modalBackdrop.classList.remove('is-active');
+            modalBackdrop.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('no-scroll');
+        }
+
+        // Eventos para abrir el modal al pulsar en cualquier tarjeta
+        document.querySelectorAll('.solucion-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const solKey = card.getAttribute('data-solution');
+                if (solKey) openModal(solKey);
+            });
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    const solKey = card.getAttribute('data-solution');
+                    if (solKey) openModal(solKey);
+                }
+            });
+        });
+
+        if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+        if (modalBackdrop) {
+            modalBackdrop.addEventListener('click', (e) => {
+                if (e.target === modalBackdrop) closeModal();
+            });
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalBackdrop.classList.contains('is-active')) {
+                closeModal();
+            }
+        });
+
+        // --- 2. SCRIPT DE ANIMACIÓN: RED E INTERACCIÓN MAGNÉTICA ---
+        const canvas = document.getElementById('network-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height, cx, cy;
+        let devices = [];
+        let mouse = { x: -1000, y: -1000 };
+        const MAX_Z = 2000;
+        const FOV = 400; 
+        const SPEED = 2.5; 
+        const CONNECTION_DIST = 450; 
+        const MOUSE_ATTRACT_DIST = 350; 
+
+        const DEVICE_TYPES = ['datacenter', 'wireless', 'network', 'industrial', 'ai', 'cybersecurity', 'storage'];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            cx = width / 2;
+            cy = height / 2;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        window.addEventListener('mouseout', () => {
+            mouse.x = -1000;
+            mouse.y = -1000;
+        });
+
+        // Soporte táctil interactivo para dispositivos móviles
+        window.addEventListener('touchstart', (e) => {
+            if (e.touches && e.touches.length > 0) {
+                mouse.x = e.touches[0].clientX;
+                mouse.y = e.touches[0].clientY;
+            }
+        }, { passive: true });
+
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches && e.touches.length > 0) {
+                mouse.x = e.touches[0].clientX;
+                mouse.y = e.touches[0].clientY;
+            }
+        }, { passive: true });
+
+        window.addEventListener('touchend', () => {
+            mouse.x = -1000;
+            mouse.y = -1000;
+        });
+
+        class Device {
+            constructor() {
+                this.x = (Math.random() - 0.5) * 3500;
+                this.y = (Math.random() - 0.5) * 3500;
+                this.z = Math.random() * MAX_Z;
+                this.type = DEVICE_TYPES[Math.floor(Math.random() * DEVICE_TYPES.length)];
+                this.flashPhase = Math.random() * Math.PI * 2; 
+            }
+
+            update() {
+                this.z -= SPEED;
+                this.flashPhase += 0.05;
+                if (this.z < 1) {
+                    this.z = MAX_Z;
+                    this.x = (Math.random() - 0.5) * 3500;
+                    this.y = (Math.random() - 0.5) * 3500;
+                    this.type = DEVICE_TYPES[Math.floor(Math.random() * DEVICE_TYPES.length)];
+                }
+            }
+
+            draw() {
+                let scale = FOV / (FOV + this.z);
+                let px = cx + this.x * scale;
+                let py = cy + this.y * scale;
+                let size = 60 * scale; 
+
+                if (px > -100 && px < width + 100 && py > -100 && py < height + 100) {
+                    ctx.save();
+                    ctx.translate(px, py);
+                    
+                    let alpha = Math.max(0, 1 - (this.z / MAX_Z));
+                    
+                    ctx.strokeStyle = `rgba(150, 150, 150, ${alpha})`;
+                    ctx.lineWidth = Math.max(0.8, 2 * scale);
+                    ctx.lineJoin = 'round';
+                    
+                    ctx.beginPath();
+                    if (this.type === 'datacenter') {
+                        ctx.rect(-size*0.3, -size*0.5, size*0.6, size*1);
+                        ctx.moveTo(-size*0.3, -size*0.2); ctx.lineTo(size*0.3, -size*0.2);
+                        ctx.moveTo(-size*0.3, size*0.2); ctx.lineTo(size*0.3, size*0.2);
+                    } 
+                    else if (this.type === 'wireless') {
+                        ctx.arc(0, size*0.3, size*0.1, 0, Math.PI*2);
+                        ctx.moveTo(-size*0.25, size*0.05); ctx.arc(0, size*0.3, size*0.35, Math.PI*1.2, Math.PI*1.8);
+                        ctx.moveTo(-size*0.4, -size*0.15); ctx.arc(0, size*0.3, size*0.6, Math.PI*1.15, Math.PI*1.85);
+                    } 
+                    else if (this.type === 'network') {
+                        ctx.rect(-size*0.5, -size*0.2, size*1, size*0.4);
+                        ctx.rect(-size*0.35, -size*0.05, size*0.15, size*0.1);
+                        ctx.rect(-size*0.1, -size*0.05, size*0.15, size*0.1);
+                        ctx.rect(size*0.15, -size*0.05, size*0.15, size*0.1);
+                    } 
+                    else if (this.type === 'industrial') {
+                        ctx.moveTo(0, -size*0.5); ctx.lineTo(size*0.4, -size*0.25);
+                        ctx.lineTo(size*0.4, size*0.25); ctx.lineTo(0, size*0.5);
+                        ctx.lineTo(-size*0.4, size*0.25); ctx.lineTo(-size*0.4, -size*0.25);
+                        ctx.closePath();
+                        ctx.moveTo(size*0.15, 0); ctx.arc(0, 0, size*0.15, 0, Math.PI*2);
+                    } 
+                    else if (this.type === 'ai') {
+                        ctx.rect(-size*0.25, -size*0.25, size*0.5, size*0.5);
+                        ctx.moveTo(-size*0.25, 0); ctx.lineTo(-size*0.5, 0);
+                        ctx.moveTo(size*0.25, 0); ctx.lineTo(size*0.5, 0);
+                        ctx.moveTo(0, -size*0.25); ctx.lineTo(0, -size*0.5);
+                        ctx.moveTo(0, size*0.25); ctx.lineTo(0, size*0.5);
+                        ctx.rect(-size*0.05, -size*0.05, size*0.1, size*0.1); 
+                    }
+                    else if (this.type === 'cybersecurity') {
+                        ctx.moveTo(-size*0.4, -size*0.4); ctx.lineTo(size*0.4, -size*0.4);
+                        ctx.lineTo(size*0.4, size*0.1); ctx.lineTo(0, size*0.5);
+                        ctx.lineTo(-size*0.4, size*0.1); ctx.closePath();
+                        ctx.moveTo(-size*0.15, 0); ctx.lineTo(0, size*0.15); ctx.lineTo(size*0.2, -size*0.1);
+                    }
+                    else if (this.type === 'storage') {
+                        ctx.ellipse(0, -size*0.3, size*0.4, size*0.15, 0, 0, Math.PI*2);
+                        ctx.moveTo(-size*0.4, -size*0.3); ctx.lineTo(-size*0.4, 0);
+                        ctx.moveTo(size*0.4, -size*0.3); ctx.lineTo(size*0.4, 0);
+                        ctx.ellipse(0, 0, size*0.4, size*0.15, 0, 0, Math.PI);
+                        ctx.moveTo(-size*0.4, 0); ctx.lineTo(-size*0.4, size*0.3);
+                        ctx.moveTo(size*0.4, 0); ctx.lineTo(size*0.4, size*0.3);
+                        ctx.ellipse(0, size*0.3, size*0.4, size*0.15, 0, 0, Math.PI);
+                    }
+                    ctx.stroke();
+
+                    if (Math.sin(this.flashPhase) > 0.95) {
+                        ctx.beginPath();
+                        ctx.arc(0, 0, size*0.15, 0, Math.PI*2);
+                        ctx.fillStyle = `rgba(0, 168, 232, ${alpha})`;
+                        ctx.shadowBlur = 10;
+                        ctx.shadowColor = '#00a8e8';
+                        ctx.fill();
+                        ctx.shadowBlur = 0;
+                    }
+                    
+                    ctx.restore();
+                }
+            }
+        }
+
+        function init() {
+            devices = [];
+            for (let i = 0; i < 85; i++) {
+                devices.push(new Device());
+            }
+        }
+
+        function animate() {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+
+            for (let i = 0; i < devices.length; i++) {
+                for (let j = i + 1; j < devices.length; j++) {
+                    let d1 = devices[i];
+                    let d2 = devices[j];
+                    
+                    let dx = d1.x - d2.x;
+                    let dy = d1.y - d2.y;
+                    let dz = d1.z - d2.z;
+                    let dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+
+                    if (dist < CONNECTION_DIST) {
+                        let scale1 = FOV / (FOV + d1.z);
+                        let px1 = cx + d1.x * scale1;
+                        let py1 = cy + d1.y * scale1;
+                        
+                        let scale2 = FOV / (FOV + d2.z);
+                        let px2 = cx + d2.x * scale2;
+                        let py2 = cy + d2.y * scale2;
+
+                        let avgZ = (d1.z + d2.z) / 2;
+                        let depthAlpha = Math.max(0, 1 - (avgZ / MAX_Z));
+                        let distAlpha = Math.max(0, 1 - (dist / CONNECTION_DIST));
+                        let alpha = depthAlpha * distAlpha * 0.8; 
+
+                        if (alpha > 0.05 && px1 > -200 && px1 < width+200 && py1 > -200 && py1 < height+200) {
+                            
+                            let midX = (px1 + px2) / 2;
+                            let midY = (py1 + py2) / 2;
+                            let cursorDist = Math.hypot(midX - mouse.x, midY - mouse.y);
+                            
+                            ctx.beginPath();
+                            ctx.moveTo(px1, py1);
+
+                            if (cursorDist < MOUSE_ATTRACT_DIST) {
+                                let pullFactor = 1 - (cursorDist / MOUSE_ATTRACT_DIST);
+                                let controlX = midX + (mouse.x - midX) * pullFactor * 1.8;
+                                let controlY = midY + (mouse.y - midY) * pullFactor * 1.8;
+                                
+                                ctx.quadraticCurveTo(controlX, controlY, px2, py2);
+                                
+                                ctx.strokeStyle = `rgba(0, 200, 255, ${Math.min(1, alpha + pullFactor)})`;
+                                ctx.lineWidth = Math.max(0.5, 2 * ((scale1 + scale2) / 2)) * (1 + pullFactor);
+                                ctx.shadowBlur = 5 * pullFactor;
+                                ctx.shadowColor = '#00a8e8';
+                            } else {
+                                ctx.lineTo(px2, py2);
+                                ctx.strokeStyle = `rgba(0, 168, 232, ${alpha})`;
+                                ctx.lineWidth = Math.max(0.3, 1.2 * ((scale1 + scale2) / 2));
+                                ctx.shadowBlur = 0;
+                            }
+                            
+                            ctx.stroke();
+                            ctx.shadowBlur = 0; 
+
+                            if (Math.random() > 0.98) {
+                                let t = Math.random();
+                                let packetX = px1 + (px2 - px1) * t;
+                                let packetY = py1 + (py2 - py1) * t;
+                                
+                                if (cursorDist < MOUSE_ATTRACT_DIST) {
+                                    let pullFactor = 1 - (cursorDist / MOUSE_ATTRACT_DIST);
+                                    let cX = midX + (mouse.x - midX) * pullFactor * 1.8;
+                                    let cY = midY + (mouse.y - midY) * pullFactor * 1.8;
+                                    
+                                    packetX = Math.pow(1-t, 2)*px1 + 2*(1-t)*t*cX + Math.pow(t, 2)*px2;
+                                    packetY = Math.pow(1-t, 2)*py1 + 2*(1-t)*t*cY + Math.pow(t, 2)*py2;
+                                }
+
+                                ctx.beginPath();
+                                ctx.arc(packetX, packetY, 2.5, 0, Math.PI*2);
+                                ctx.fillStyle = '#00d4ff'; 
+                                ctx.fill();
+                            }
+                        }
+                    }
+                }
+            }
+
+            devices.forEach(device => {
+                device.update();
+                device.draw();
+            });
+
+            devices.forEach(d => {
+                let scale = FOV / (FOV + d.z);
+                let px = cx + d.x * scale;
+                let py = cy + d.y * scale;
+                let dMouse = Math.hypot(px - mouse.x, py - mouse.y);
+                
+                if (dMouse < 150 && d.z > 0 && px > 0 && px < width && py > 0 && py < height) {
+                    let alpha = Math.max(0, 1 - (d.z / MAX_Z)) * (1 - dMouse/150);
+                    ctx.beginPath();
+                    ctx.moveTo(px, py);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.strokeStyle = `rgba(0, 200, 255, ${alpha})`;
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+                }
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+    </script>
+</body>
+</html>
