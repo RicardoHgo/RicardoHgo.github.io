@@ -5,9 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TITAN IPS | Global Tech & Architecture Control</title>
     
-    <!-- Favicon / Icono de la Pestaña -->
+    <!-- Favicon & PWA App Manifest -->
     <link rel="icon" type="image/png" href="logo_title.png">
     <link rel="apple-touch-icon" href="logo_title.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00235a">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="preload" as="image" href="logo%20tips2_3.png" fetchpriority="high">
 
     <!-- Canonical URL & Hreflang Alternates -->
     <link rel="canonical" href="https://titanips.mx/">
@@ -15,8 +19,8 @@
     <link rel="alternate" hreflang="es-MX" href="https://titanips.mx/">
     <link rel="alternate" hreflang="x-default" href="https://titanips.mx/">
 
-    <!-- SEO Meta Tags Primarios -->
-    <meta name="description" content="Soluciones integrales de infraestructura crítica, ciberseguridad avanzada y consultoría GRC para empresas. Optimiza y protege tus operaciones tecnológicas.">
+    <!-- SEO Meta Tags Primarios (Optimizado para Monterrey, México y Global) -->
+    <meta name="description" content="Soluciones integrales de infraestructura crítica, ciberseguridad avanzada y consultoría GRC para empresas en Monterrey, Nuevo León y a nivel global. Optimiza y protege tus operaciones tecnológicas con TITAN IPS.">
     <meta name="author" content="TITAN IPS">
     <meta name="publisher" content="TITAN IPS">
 
@@ -32,37 +36,39 @@
     <meta name="ICBM" content="25.686614, -100.316113">
 
     <!-- Palabras Clave y Similitudes Semánticas (Mercado Monterrey, México y Global) -->
-    <meta name="keywords" content="redes de seguridad, enterprise, seguridad, ciberseguridad Monterrey, consultoría TI Monterrey, consultoría estratégica TI, seguridad de redes, redes enterprise, infraestructura crítica Monterrey, consultoría GRC, gobierno riesgo y cumplimiento, virtual CISO, vCISO México, virtual DPO, continuidad de negocio BCP DRP, ISO 27001 Monterrey, ISO 27001 2022 México, NIST CSF 2.0, auditoría CISA, pentesting Monterrey, ethical hacking México, Red Teaming, MITRE ATT&CK, zero trust México, arquitectura zero trust, seguridad perimetral, redes IT OT, ciberseguridad industrial, ISA IEC 62443, seguridad SCADA, SD-WAN enterprise, Wi-Fi 7 corporativo, centros de datos Monterrey, cableado estructurado Monterrey, fibra óptica MPO 400G, certificación Fluke Networks, Innovation AI, Agentic AI, IA Agéntica México, Inteligencia Artificial Generativa empresarial, agentes autónomos Monterrey, Private LLM, RAG empresarial soberano, gobernanza de IA, ISO 42001, DevSecOps México, automatización RPA Monterrey, titanips.mx, TITAN IPS">
+    <meta name="keywords" content="redes de seguridad, enterprise, seguridad, ciberseguridad Monterrey, ciberseguridad San Pedro Garza García, consultoría TI Monterrey, consultoría TI Nuevo León, consultoría estratégica TI, seguridad de redes, redes enterprise, infraestructura crítica Monterrey, consultoría GRC, gobierno riesgo y cumplimiento, virtual CISO, vCISO Monterrey, vCISO México, virtual DPO, continuidad de negocio BCP DRP, ISO 27001 Monterrey, ISO 27001 2022 México, NIST CSF 2.0, auditoría CISA, pentesting Monterrey, ethical hacking México, Red Teaming, MITRE ATT&CK, zero trust México, arquitectura zero trust, seguridad perimetral, redes IT OT, ciberseguridad industrial Monterrey, nearshoring IT Nuevo León, ISA IEC 62443, seguridad SCADA, SD-WAN enterprise, Wi-Fi 7 corporativo, centros de datos Monterrey, cableado estructurado Monterrey, fibra óptica MPO 400G, certificación Fluke Networks, Innovation AI, Agentic AI, IA Agéntica México, Inteligencia Artificial Generativa empresarial, agentes autónomos Monterrey, Private LLM, RAG empresarial soberano, gobernanza de IA, ISO 42001, DevSecOps México, automatización RPA Monterrey, titanips.mx, TITAN IPS">
 
     <!-- Open Graph (Facebook, LinkedIn, WhatsApp & Previsualizaciones Corporativas) -->
     <meta property="og:site_name" content="TITAN IPS">
     <meta property="og:title" content="TITAN IPS | Global Tech & Architecture Control">
-    <meta property="og:description" content="Soluciones integrales de infraestructura crítica, ciberseguridad avanzada y consultoría GRC para empresas. Optimiza y protege tus operaciones tecnológicas.">
+    <meta property="og:description" content="Soluciones integrales de infraestructura crítica, ciberseguridad avanzada y consultoría GRC para empresas en Monterrey, Nuevo León y a nivel global. Optimiza y protege tus operaciones tecnológicas con TITAN IPS.">
     <meta property="og:url" content="https://titanips.mx/">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_MX">
     <meta property="og:image" content="https://titanips.mx/logo_title.png">
-    <meta property="og:image:alt" content="TITAN IPS - Global Tech & Architecture Control">
+    <meta property="og:image:alt" content="TITAN IPS - Global Tech & Architecture Control Monterrey">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="TITAN IPS | Global Tech & Architecture Control">
-    <meta name="twitter:description" content="Soluciones integrales de infraestructura crítica, ciberseguridad avanzada y consultoría GRC para empresas. Optimiza y protege tus operaciones tecnológicas.">
+    <meta name="twitter:description" content="Soluciones integrales de infraestructura crítica, ciberseguridad avanzada y consultoría GRC para empresas en Monterrey, Nuevo León y a nivel global. Optimiza y protege tus operaciones tecnológicas con TITAN IPS.">
     <meta name="twitter:image" content="https://titanips.mx/logo_title.png">
 
-    <!-- Datos Estructurados JSON-LD (Schema.org) para Google & Bing Knowledge Graph -->
+    <!-- Datos Estructurados JSON-LD (Schema.org) para Google & Bing Knowledge Graph, LocalBusiness, Breadcrumbs y FAQPage -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": ["Organization", "Corporation", "ProfessionalService"],
+          "@type": ["Organization", "Corporation", "LocalBusiness", "ProfessionalService"],
           "@id": "https://titanips.mx/#organization",
           "name": "TITAN IPS",
           "alternateName": [
             "TITAN IPS Global Tech & Architecture Control",
             "TITANIPS",
-            "Titan IPS Monterrey"
+            "Titan IPS Monterrey",
+            "Titan IPS Ciberseguridad Monterrey",
+            "Titan IPS Redes e Infraestructura Crítica Nuevo León"
           ],
           "url": "https://titanips.mx/",
           "logo": {
@@ -70,12 +76,22 @@
             "url": "https://titanips.mx/logo_title.png",
             "caption": "TITAN IPS Logo"
           },
-          "image": "https://titanips.mx/logo_title.png",
-          "description": "Soluciones integrales de infraestructura crítica, redes de seguridad enterprise, ciberseguridad avanzada, consultoría GRC, sistemas autónomos de IA y continuidad de negocio para corporativos en Monterrey, México y a nivel global.",
+          "image": [
+            "https://titanips.mx/logo_title.png",
+            "https://titanips.mx/logo%20tips2_3.png"
+          ],
+          "description": "Consultoría líder en ciberseguridad avanzada, infraestructura crítica, redes enterprise, centros de datos, gobernanza GRC (vCISO / ISO 27001) y Agentic AI para corporativos e industrias en Monterrey, Nuevo León, México y a nivel global.",
+          "telephone": "+52-56-2333-7990",
+          "email": "contacto@titanips.mx",
+          "priceRange": "$$$$",
+          "currenciesAccepted": "MXN, USD",
+          "paymentAccepted": "Transferencia bancaria, Tarjetas corporativas, Órdenes de compra B2B",
           "address": {
             "@type": "PostalAddress",
+            "streetAddress": "Monterrey Centro y Corredores Empresariales",
             "addressLocality": "Monterrey",
             "addressRegion": "Nuevo León",
+            "postalCode": "64000",
             "addressCountry": "MX"
           },
           "geo": {
@@ -83,10 +99,45 @@
             "latitude": 25.686614,
             "longitude": -100.316113
           },
+          "hasMap": "https://www.google.com/maps?q=Monterrey,+Nuevo+Leon",
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+              "opens": "08:30",
+              "closes": "18:30"
+            },
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Saturday"],
+              "opens": "09:00",
+              "closes": "14:00"
+            }
+          ],
           "areaServed": [
             {
               "@type": "City",
               "name": "Monterrey"
+            },
+            {
+              "@type": "City",
+              "name": "San Pedro Garza García"
+            },
+            {
+              "@type": "City",
+              "name": "Apodaca"
+            },
+            {
+              "@type": "City",
+              "name": "Santa Catarina"
+            },
+            {
+              "@type": "City",
+              "name": "San Nicolás de los Garza"
+            },
+            {
+              "@type": "City",
+              "name": "Guadalupe"
             },
             {
               "@type": "AdministrativeArea",
@@ -101,21 +152,41 @@
               "name": "Global"
             }
           ],
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "telephone": "+52-56-2333-7990",
+              "contactType": "sales",
+              "areaServed": ["MX", "US", "LATAM"],
+              "availableLanguage": ["es", "en"],
+              "url": "https://titanips.mx/#contacto"
+            },
+            {
+              "@type": "ContactPoint",
+              "telephone": "+52-56-2333-7990",
+              "contactType": "customer support",
+              "areaServed": ["MX", "US", "LATAM"],
+              "availableLanguage": ["es", "en"],
+              "url": "https://wa.me/525623337990"
+            }
+          ],
           "sameAs": [
             "https://www.linkedin.com/company/titanips/",
-            "https://wa.me/525623337990"
+            "https://wa.me/525623337990",
+            "https://calendar.app.google/ZH27bWmXKuaP2psF6"
           ],
           "knowsAbout": [
             "Redes de seguridad enterprise",
-            "Ciberseguridad y Pentesting",
-            "Consultoría estratégica TI",
-            "Virtual CISO y Virtual DPO",
-            "Cumplimiento GRC e ISO 27001",
+            "Ciberseguridad y Pentesting en Monterrey",
+            "Consultoría estratégica TI Nuevo León",
+            "Virtual CISO y Virtual DPO México",
+            "Cumplimiento GRC e ISO 27001:2022",
             "Innovation AI y Agentic AI",
-            "Zero Trust Network Architecture",
-            "Redes industriales IT/OT ISA/IEC 62443",
-            "Cableado estructurado y Centros de Datos",
-            "DevSecOps y Automatización RPA"
+            "Zero Trust Network Architecture (ZTNA)",
+            "Redes industriales IT/OT e ISA/IEC 62443",
+            "Cableado estructurado y Centros de Datos 400G",
+            "DevSecOps y Automatización RPA",
+            "Infraestructura tecnológica para Nearshoring en Monterrey"
           ],
           "hasOfferCatalog": {
             "@type": "OfferCatalog",
@@ -134,7 +205,7 @@
                 "itemOffered": {
                   "@type": "Service",
                   "name": "Consultoría Estratégica & vCISO",
-                  "description": "Dirección de seguridad bajo demanda (Virtual CISO & Virtual DPO), planes directores BCP/DRP con resiliencia activa y simulación de crisis para consejos de administración."
+                  "description": "Dirección de seguridad bajo demanda (Virtual CISO & Virtual DPO), planes directores BCP/DRP con resiliencia activa y simulación de crisis para consejos de administración en Monterrey y México."
                 }
               },
               {
@@ -150,7 +221,7 @@
                 "itemOffered": {
                   "@type": "Service",
                   "name": "Consultoría Redes IT/OT & Enterprise",
-                  "description": "Infraestructuras de conectividad de misión crítica 99.999% con paradigma Zero Trust (ZTNA), microsegmentación L2-L7, SD-WAN y blindaje industrial ISA/IEC 62443."
+                  "description": "Infraestructuras de conectividad de misión crítica 99.999% con paradigma Zero Trust (ZTNA), microsegmentación L2-L7, SD-WAN y blindaje industrial ISA/IEC 62443 para plantas y corporativos de nearshoring."
                 }
               },
               {
@@ -174,7 +245,7 @@
                 "itemOffered": {
                   "@type": "Service",
                   "name": "Cableado Estructurado & Centros de Datos",
-                  "description": "Ingeniería de Capa 1, troncales de fibra óptica monomodo y multimodo MPO hasta 400G, RetroFit en caliente y certificación formal Fluke Networks."
+                  "description": "Ingeniería de Capa 1, troncales de fibra óptica monomodo y multimodo MPO hasta 400G, RetroFit en caliente y certificación formal Fluke Networks en Monterrey y Nuevo León."
                 }
               }
             ]
@@ -185,11 +256,99 @@
           "@id": "https://titanips.mx/#website",
           "url": "https://titanips.mx/",
           "name": "TITAN IPS | Global Tech & Architecture Control",
-          "description": "Soluciones integrales de infraestructura crítica, ciberseguridad avanzada y consultoría GRC para empresas.",
+          "description": "Soluciones integrales de infraestructura crítica, ciberseguridad avanzada y consultoría GRC para empresas en Monterrey, Nuevo León.",
           "publisher": {
             "@id": "https://titanips.mx/#organization"
           },
-          "inLanguage": "es"
+          "inLanguage": "es-MX"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://titanips.mx/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "https://titanips.mx/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Nosotros",
+              "item": "https://titanips.mx/#nosotros"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Soluciones",
+              "item": "https://titanips.mx/#soluciones"
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "name": "Alianzas",
+              "item": "https://titanips.mx/#alianzas"
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "name": "Preguntas Frecuentes",
+              "item": "https://titanips.mx/#faq"
+            },
+            {
+              "@type": "ListItem",
+              "position": 6,
+              "name": "Contacto Monterrey",
+              "item": "https://titanips.mx/#contacto"
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://titanips.mx/#faqpage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "¿Qué servicios de ciberseguridad e infraestructura crítica ofrece TITAN IPS en Monterrey y Nuevo León?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "En TITAN IPS brindamos servicios integrales de ingeniería tecnológica desde Monterrey, Nuevo León: Consultoría Estratégica y vCISO, Ciberseguridad Activa (Pentesting, Red Teaming, MITRE ATT&CK), Cumplimiento GRC (ISO/IEC 27001:2022, NIST CSF 2.0), Conectividad y Redes Enterprise IT/OT (Zero Trust, SD-WAN, ISA/IEC 62443), Cableado Estructurado y Data Centers de 400 Gbps, Ingeniería de Software / DevSecOps, y soluciones en Innovation AI y Agentic AI para corporativos e industrias."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Cómo ayuda TITAN IPS a las industrias y empresas de nearshoring en Monterrey y la zona metropolitana?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "El auge de nearshoring en Nuevo León (Monterrey, San Pedro Garza García, Apodaca, Santa Catarina) exige infraestructuras de telecomunicaciones de misión crítica con disponibilidad 99.999% y cumplimiento estricto de estándares internacionales. En TITAN IPS diseñamos e implementamos redes de ultra baja latencia, microsegmentación industrial IT/OT, centros de datos certificados Fluke Networks y continuidad operativa (BCP/DRP) para blindar la producción manufacturera y los corporativos transfronterizos."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Cómo funciona el servicio de Virtual CISO (vCISO) y consultoría GRC para corporativos en México?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Nuestro modelo vCISO proporciona dirección ejecutiva de ciberseguridad bajo demanda para empresas que requieren liderazgo C-Level con interlocución directa ante el Consejo de Administración. Realizamos auditorías GAP Analysis, gobierno de datos, gestión de riesgos de terceros (TPRM) y preparamos a las organizaciones para certificaciones ISO 27001, SOC 2 y normativas bancarias, optimizando hasta un 65% los costos fijos directivos."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Qué soluciones de Inteligencia Artificial (Agentic AI) implementa TITAN IPS?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Integramos sistemas autónomos de Agentic AI y modelos de Inteligencia Artificial Generativa privada bajo arquitecturas RAG soberanas con blindaje Zero-Data-Leakage. Alineamos las implementaciones a las normas ISO/IEC 42001 y NIST AI RMF, garantizando que los datos confidenciales corporativos permanezcan totalmente protegidos y auditables."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Cómo agendar una asesoría técnica ejecutiva en Monterrey con los arquitectos de TITAN IPS?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Puede agendar una sesión estratégica sin salir de nuestro sitio web haciendo clic en el botón «Agendar Asesoría», seleccionando fecha y hora en nuestro calendario ejecutivo, o contactándonos de forma inmediata por WhatsApp Business al +52 56 2333 7990. Nuestros consultores senior analizan su infraestructura actual y presentan una propuesta técnica a la medida."
+              }
+            }
+          ]
         }
       ]
     }
@@ -1944,6 +2103,94 @@
             transform: scale(1.08);
         }
 
+        /* SECCIÓN: Preguntas Frecuentes (FAQ / SEO Local Monterrey) */
+        #faq {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 85px 20px 40px;
+        }
+
+        .faq-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 35px;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(0, 35, 90, 0.1);
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(0, 35, 90, 0.04);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .faq-item[open] {
+            border-color: rgba(0, 168, 232, 0.4);
+            box-shadow: 0 8px 30px rgba(0, 35, 90, 0.08);
+            background: #ffffff;
+        }
+
+        .faq-question {
+            padding: 20px 24px;
+            font-size: 1.12rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            user-select: none;
+            transition: color 0.2s ease;
+        }
+
+        .faq-question::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-question:hover {
+            color: #0077b6;
+        }
+
+        .faq-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(0, 35, 90, 0.06);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--primary-blue);
+        }
+
+        .faq-item[open] .faq-icon {
+            transform: rotate(45deg);
+            background: var(--primary-blue);
+            color: #ffffff;
+        }
+
+        .faq-answer {
+            padding: 0 24px 24px;
+            font-size: 0.98rem;
+            line-height: 1.7;
+            color: #444;
+            border-top: 1px solid rgba(0, 35, 90, 0.06);
+            padding-top: 16px;
+        }
+
+        .faq-answer strong {
+            color: var(--primary-blue);
+        }
+
         /* SECCIÓN 4: Contacto y Redes Sociales */
         .contacto-box {
             text-align: center;
@@ -2256,6 +2503,21 @@
             .whatsapp-qr-section {
                 display: none; /* En móvil no se requiere escanear QR */
             }
+
+            /* FAQ Móvil */
+            #faq {
+                padding: 65px 16px 30px;
+            }
+
+            .faq-question {
+                font-size: 1rem;
+                padding: 16px 18px;
+            }
+
+            .faq-answer {
+                padding: 0 18px 18px;
+                font-size: 0.92rem;
+            }
         }
 
         /* Pantallas ultra compactas (< 480px) */
@@ -2290,7 +2552,7 @@
 
     <header>
         <a href="#nosotros" class="logo" aria-label="TITAN IPS Inicio">
-            <img src="logo tips2_3.png" alt="TITAN IPS Logo" class="logo-img">
+            <img src="logo tips2_3.png" alt="TITAN IPS - Infraestructura Crítica, Ciberseguridad y Agentic AI en Monterrey" class="logo-img" width="180" height="50">
         </a>
 
         <!-- Botón Hamburguesa Móvil -->
@@ -2308,6 +2570,7 @@
                 <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
                 <li><a href="#soluciones" class="nav-link">Productos & Soluciones</a></li>
                 <li><a href="#alianzas" class="nav-link">Alianzas</a></li>
+                <li><a href="#faq" class="nav-link">Preguntas Frecuentes</a></li>
                 <li><a href="#contacto" class="nav-link">Contacto</a></li>
             </ul>
         </nav>
@@ -2317,7 +2580,7 @@
 
     <section id="nosotros">
         <h1 class="hero-title text-glow">Global Tech &<br><span>Architecture Control</span></h1>
-        <p class="section-subtitle text-glow">Tus retos, nuestras soluciones. Llevamos tu operación al siguiente nivel: optimizando costos y eliminando gastos innecesarios. Diseñamos la resiliencia exacta para garantizar una operación ininterrumpida.</p>
+        <p class="section-subtitle text-glow">Tus retos, nuestras soluciones. Desde nuestro centro de operaciones en Monterrey, Nuevo León, respaldamos a corporativos e industrias a nivel nacional y global. Llevamos tu operación al siguiente nivel: optimizando costos, blindando infraestructura crítica y diseñando la resiliencia tecnológica exacta para garantizar una operación ininterrumpida ante entornos de alta exigencia y nearshoring.</p>
         <a href="#soluciones" class="btn-metallic" style="padding: 15px 35px; font-size: 16px;">Explorar Soluciones</a>
     </section>
 
@@ -2461,16 +2724,16 @@
         <p class="section-subtitle text-glow">Respaldados por los líderes globales de la industria para garantizar implementaciones de clase mundial.</p>
         <div class="alianzas-container text-glow">
             <a href="https://www.cisco.com" target="_blank" rel="noopener noreferrer" data-fabricante="cisco" role="button" aria-haspopup="dialog" aria-label="Abrir detalles y portal oficial de Cisco Systems">
-                <img src="Cisco.png" alt="Cisco" class="alianza-logo">
+                <img src="Cisco.png" alt="Cisco Systems - Alianza Tecnológica con TITAN IPS Monterrey" class="alianza-logo" width="160" height="45" loading="lazy">
             </a>
             <a href="https://www.fortinet.com" target="_blank" rel="noopener noreferrer" data-fabricante="fortinet" role="button" aria-haspopup="dialog" aria-label="Abrir detalles y portal oficial de Fortinet">
-                <img src="Fortinet.png" alt="Fortinet" class="alianza-logo">
+                <img src="Fortinet.png" alt="Fortinet Ciberseguridad - Partner Oficial TITAN IPS Monterrey" class="alianza-logo" width="160" height="45" loading="lazy">
             </a>
             <a href="https://www.ibm.com" target="_blank" rel="noopener noreferrer" data-fabricante="ibm" role="button" aria-haspopup="dialog" aria-label="Abrir detalles y portal oficial de IBM">
-                <img src="IBM.png" alt="IBM" class="alianza-logo">
+                <img src="IBM.png" alt="IBM Watsonx y Ciberseguridad QRadar - Soluciones TITAN IPS México" class="alianza-logo" width="120" height="45" loading="lazy">
             </a>
             <a href="https://www.trellix.com" target="_blank" rel="noopener noreferrer" data-fabricante="trellix" role="button" aria-haspopup="dialog" aria-label="Abrir detalles y portal oficial de Trellix">
-                <img src="Trellix.png" alt="Trellix" class="alianza-logo">
+                <img src="Trellix.png" alt="Trellix XDR Ciberdefensa - Integración TITAN IPS" class="alianza-logo" width="160" height="45" loading="lazy">
             </a>
             <a href="https://www.h3c.com" target="_blank" rel="noopener noreferrer" data-fabricante="h3c" role="button" aria-haspopup="dialog" aria-label="Abrir detalles y portal oficial de H3C" style="text-decoration: none;">
                 <span class="alianza-logo" style="font-size: 2.2rem; font-weight: 800; display: flex; align-items: center; justify-content: center; color: #cc0000;">H3C</span>
@@ -2478,11 +2741,71 @@
         </div>
     </section>
 
-    <!-- SECCIÓN CONTACTO ACTUALIZADA CON ICONOS -->
+    <!-- SECCIÓN: PREGUNTAS FRECUENTES (FAQ / SEO LOCAL MONTERREY & MÉXICO) -->
+    <section id="faq">
+        <h2 class="section-title text-glow">Preguntas Frecuentes</h2>
+        <p class="section-subtitle text-glow">Respuestas estratégicas sobre infraestructura crítica, ciberseguridad, cumplimiento normativo y soluciones de Inteligencia Artificial en Monterrey y a nivel global.</p>
+        
+        <div class="faq-accordion">
+            <details class="faq-item" open>
+                <summary class="faq-question">
+                    <span>¿Qué servicios de ciberseguridad e infraestructura crítica ofrece TITAN IPS en Monterrey y Nuevo León?</span>
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                </summary>
+                <div class="faq-answer">
+                    <p>En <strong>TITAN IPS</strong> brindamos servicios integrales de ingeniería y consultoría tecnológica desde nuestro centro de operaciones en <strong>Monterrey, Nuevo León</strong>: Consultoría Estratégica y vCISO, Ciberseguridad Defensiva (Pentesting, Red Teaming, MITRE ATT&CK), Cumplimiento GRC (ISO/IEC 27001:2022, NIST CSF 2.0), Conectividad y Redes Enterprise IT/OT (Zero Trust, SD-WAN, ISA/IEC 62443), Cableado Estructurado y Data Centers de 400 Gbps, Ingeniería de Software / DevSecOps, y soluciones pioneras en Innovation AI y Agentic AI para corporativos e industrias transfronterizas.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">
+                    <span>¿Cómo ayuda TITAN IPS a las industrias y empresas de nearshoring en Monterrey y la zona metropolitana?</span>
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                </summary>
+                <div class="faq-answer">
+                    <p>El auge de <strong>nearshoring en Nuevo León</strong> (Monterrey, San Pedro Garza García, Apodaca, Santa Catarina) exige infraestructuras de telecomunicaciones de misión crítica con disponibilidad 99.999% y cumplimiento estricto de estándares internacionales. En TITAN IPS diseñamos e implementamos redes de ultra baja latencia, microsegmentación industrial IT/OT, centros de datos certificados Fluke Networks y continuidad operativa (BCP/DRP) para blindar la producción manufacturera y los corporativos transfronterizos.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">
+                    <span>¿Cómo funciona el servicio de Virtual CISO (vCISO) y consultoría GRC para corporativos en México?</span>
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                </summary>
+                <div class="faq-answer">
+                    <p>Nuestro modelo <strong>Virtual CISO (vCISO) &amp; vDPO</strong> proporciona dirección ejecutiva de ciberseguridad bajo demanda para corporativos que requieren liderazgo C-Level con interlocución directa ante el Consejo de Administración. Realizamos auditorías GAP Analysis, gobierno de datos, gestión de riesgos de terceros (TPRM) y preparamos a las organizaciones para certificaciones ISO 27001, SOC 2 y normativas bancarias, optimizando hasta un 65% los costos fijos directivos.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">
+                    <span>¿Qué soluciones de Inteligencia Artificial (Agentic AI) implementa TITAN IPS?</span>
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                </summary>
+                <div class="faq-answer">
+                    <p>Integramos sistemas autónomos de <strong>Agentic AI</strong> y modelos de Inteligencia Artificial Generativa privada bajo arquitecturas RAG soberanas con blindaje <strong>Zero-Data-Leakage</strong>. Alineamos las implementaciones a las normas ISO/IEC 42001 y NIST AI RMF, garantizando que los datos confidenciales corporativos permanezcan totalmente protegidos y auditables sin fuga hacia nubes públicas no autorizadas.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary class="faq-question">
+                    <span>¿Cómo agendar una asesoría técnica ejecutiva en Monterrey con los arquitectos de TITAN IPS?</span>
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                </summary>
+                <div class="faq-answer">
+                    <p>Puede agendar una sesión estratégica directamente en nuestro sitio web haciendo clic en el botón <strong>«Agendar Asesoría»</strong> para seleccionar fecha y hora en nuestro calendario ejecutivo, o contactándonos de forma inmediata por WhatsApp Business al <strong>+52 56 2333 7990</strong>. Nuestros consultores senior analizan su infraestructura actual y presentan una propuesta técnica a la medida de sus objetivos corporativos.</p>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- SECCIÓN CONTACTO ACTUALIZADA CON METADATOS LOCALES -->
     <section id="contacto">
         <div class="contacto-box text-glow">
+            <span style="display: inline-block; background: rgba(0, 168, 232, 0.12); color: #0077b6; font-weight: 800; font-size: 11.5px; padding: 4px 14px; border-radius: 14px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px;">Sede Corporativa: Monterrey, N.L. • Alcance Global</span>
             <h3>Eleva el estándar de tu infraestructura hoy.</h3>
-            <p style="font-size: 1.2rem; font-weight: 600; margin-bottom: 20px;">Estamos listos para blindar su operación. Seleccione el horario que mejor se adapte a su agenda.</p>
+            <p style="font-size: 1.15rem; font-weight: 600; margin-bottom: 8px;">Estamos listos para blindar su operación en Monterrey, Nuevo León y a nivel internacional.</p>
+            <p style="font-size: 0.95rem; color: #555; margin-bottom: 22px;">Seleccione el horario que mejor se adapte a su agenda para una sesión con nuestros arquitectos senior.</p>
             
             <!-- Botón Central de Asesoría -->
             <a href="https://calendar.app.google/ZH27bWmXKuaP2psF6" target="_blank" rel="noopener noreferrer" class="btn-metallic">
@@ -2498,12 +2821,13 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.031 0c-6.627 0-11.988 5.361-11.988 11.988 0 2.115.556 4.157 1.613 5.969l-1.656 6.043 6.183-1.621c1.761.967 3.75 1.478 5.848 1.478 6.627 0 11.988-5.361 11.988-11.988 0-6.627-5.361-11.988-11.988-11.988zm6.541 17.202c-.292.818-1.716 1.564-2.399 1.653-.611.08-1.396.173-4.524-1.123-3.754-1.554-6.177-5.405-6.363-5.653-.186-.248-1.52-2.023-1.52-3.864 0-1.842.96-2.754 1.298-3.109.338-.355.736-.444.981-.444.245 0 .49.006.703.016.223.01.523-.085.818.625.305.736 1.042 2.54 1.134 2.726.092.186.153.404.031.65-.123.245-.184.398-.368.613-.184.215-.386.467-.552.65-.184.198-.383.415-.164.792.219.377.973 1.608 2.086 2.601 1.433 1.282 2.628 1.677 3.013 1.863.385.186.613.153.843-.109.23-.261.996-1.165 1.261-1.564.264-.398.528-.33.882-.198.354.132 2.235 1.054 2.618 1.242.383.188.638.281.73.438.092.157.092.903-.2 1.721z"/></svg>
                 </a>
             </div>
+            <p style="font-size: 0.85rem; color: #777; margin-top: 25px;">Atención Corporativa: contacto@titanips.mx | Tel: +52 56 2333 7990 | Monterrey, Nuevo León, México</p>
         </div>
     </section>
     </main>
 
     <footer>
-        <p>TITAN IPS &copy; 2026. Global Tech & Architecture Control. | www.titanips.mx</p>
+        <p>TITAN IPS &copy; 2026. Global Tech & Architecture Control. | Monterrey, Nuevo León, México | www.titanips.mx</p>
     </footer>
 
     <!-- BOTÓN FLOTANTE QUE SIGUE EL DESPLIGUE -->
